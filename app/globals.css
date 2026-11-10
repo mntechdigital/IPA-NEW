@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  /* Exact IPA Logo Brand Colors */
+  --color-org-green: #0C57A5; /* Primary Logo Blue */
+  --color-org-green-dark: #0B2A4A; /* Deep Navy */
+  --color-org-green-light: #1A6CC4; /* Highlight Blue */
+  --color-org-yellow: #F6B834; /* Warm Sunshine Contrast */
+  --color-org-yellow-light: #FDE8B5;
+  --color-org-orange: #E85338; /* Coral Accent */
+  --color-org-orange-hover: #D44228;
+  --color-org-cream: #F8FAFD;
+  --color-org-border: #E2E8F0;
+  --color-org-text: #1E293B;
+  --color-org-muted: #64748B;
+  
+  --color-ipa-navy: #0B2A4A;
+  --color-ipa-blue: #0C57A5;
+  --color-ipa-blue-dark: #08213B;
+  --color-ipa-blue-light: #3479B9;
+  --color-ipa-blue-ice: #EAF2FA;
+  --color-ipa-charcoal: #1E293B;
+  --color-ipa-muted: #64748B;
+  --color-ipa-border: #E2E8F0;
+  --color-ipa-offwhite: #F8FAFC;
+  
+  --font-sans: "Plus Jakarta Sans", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-sans);
+}
+
+body {
+  color: #1E293B;
+  background-color: #FFFFFF;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: #0C57A5;
+  color: #FFFFFF;
+}
+
+:focus-visible {
+  outline: 2px solid #0C57A5;
+  outline-offset: 2px;
+}
+
+/* Custom rounded shapes */
+.rounded-organ-xl {
+  border-radius: 1.5rem;
+}
+.rounded-organ-2xl {
+  border-radius: 2rem;
+}
+.rounded-organ-3xl {
+  border-radius: 2.5rem;
+}
+
+/* Starburst graphic animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+}
+
+/* Tiptap Editor ProseMirror Styles */
+.tiptap {
+  outline: none;
+}
+.tiptap p.is-editor-empty:first-child::before {
+  color: #94a3b8;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+.tiptap ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  margin: 0.5rem 0;
+}
+.tiptap ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem;
+  margin: 0.5rem 0;
+}
+.tiptap blockquote {
+  border-left: 3px solid #0C57A5;
+  padding-left: 0.75rem;
+  font-style: italic;
+  color: #475569;
+  margin: 0.75rem 0;
+}
+.tiptap code {
+  background-color: #F1F5F9;
+  color: #0F172A;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+  font-family: var(--font-mono);
+}
+.tiptap h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: #0B2A4A;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.tiptap h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: #0B2A4A;
+  margin-top: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+

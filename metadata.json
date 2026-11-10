@@ -1,0 +1,6 @@
+{
+  "name": "IPA — Institute of Public Affairs",
+  "description": "Official institutional portal for the Institute of Public Affairs (IPA). Independent research, media studies, public policy dialogue, and civic awareness initiatives.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

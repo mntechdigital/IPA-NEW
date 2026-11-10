@@ -1,0 +1,1126 @@
+# MASTER PROMPT — IPA (Institute of Public Affairs)
+## Premium Institutional Website | UI/UX Design & Frontend Development
+
+Act as a world-class multidisciplinary team consisting of:
+
+- A senior product designer with 25+ years of experience.
+- A principal UX architect specializing in institutional and research websites.
+- A senior visual designer with expertise in editorial design and information architecture.
+- A senior Next.js frontend architect.
+- A creative interaction designer specializing in GSAP and Motion.
+- An accessibility and performance engineer.
+
+Your responsibility is to design and develop a complete, production-quality frontend website for **IPA — Institute of Public Affairs**.
+
+This is not a generic corporate website, SaaS landing page, startup template, or AI-generated design exercise.
+
+The result must look like a carefully researched, professionally art-directed institutional website created by an experienced design and engineering studio.
+
+---
+
+# 1. ORGANIZATION OVERVIEW
+
+Organization name: IPA — Institute of Public Affairs.
+
+Organization type:
+- Social movement organization.
+- Media research organization.
+- Public affairs and social awareness institution.
+- Research, advocacy, and public engagement platform.
+
+Core organizational direction:
+
+IPA aims to communicate public affairs, conduct media-related research, encourage informed public participation, promote social awareness, and contribute to meaningful social development.
+
+The website should establish IPA as a credible, research-oriented, socially engaged organization.
+
+Important:
+All organizational descriptions, research topics, projects, statistics, and publications used in this prototype must be realistic demo content. Do not invent actual organizational achievements, government affiliations, official partnerships, awards, or verified statistics.
+
+Use clearly identifiable demonstration content where organizational facts have not been provided.
+
+# 2. DESIGN REFERENCES
+
+Study these two websites for information architecture, content organization, and institutional presentation:
+
+1. https://mrdibd.org/
+2. https://www.ti-bangladesh.org/en
+
+Use their organizational approach as inspiration, not as templates.
+
+From MRDI:
+- Research and media development presentation.
+- Organizational information.
+- Research publications.
+- Projects and initiatives.
+- Institutional credibility.
+
+From Transparency International Bangladesh:
+- Advocacy and public engagement.
+- Campaigns and social initiatives.
+- Research reports.
+- News and press releases.
+- Public awareness communication.
+
+Do not copy their layouts, branding, text, or visual identity.
+
+Create an original design system for IPA.
+
+# 3. BRAND IDENTITY AND VISUAL DIRECTION
+
+Use the supplied IPA logo as the primary branding reference.
+
+Organization name:
+INSTITUTE OF PUBLIC AFFAIRS
+
+Brand personality:
+- Intellectual.
+- Trustworthy.
+- Independent.
+- Research-driven.
+- Professional.
+- Public-focused.
+- Socially responsible.
+- Contemporary.
+
+## Color system
+
+Extract the primary visual direction from the supplied logo.
+
+Primary blue: #1559A6 (approximate logo-inspired blue).
+
+Suggested supporting palette:
+
+- Deep Navy: #102D4F
+- Primary Blue: #1559A6
+- Secondary Blue: #3479B9
+- Light Blue: #EAF2FA
+- Off White: #F8FAFC
+- White: #FFFFFF
+- Charcoal: #242A31
+- Muted Gray: #687481
+- Border Gray: #E3E8EE
+
+Use blue strategically for branding, navigation, interactive elements, important links, and section accents.
+
+Avoid making every section blue.
+
+Use white, warm off-white, subtle gray, and carefully selected blue backgrounds to create a sophisticated institutional identity.
+
+## Typography
+
+Use a sophisticated typography system.
+
+Recommended:
+- Headings: Manrope, DM Sans, or Plus Jakarta Sans.
+- Body: Inter or a similarly readable sans-serif.
+- Editorial accents: A restrained serif font where appropriate.
+
+Typography should communicate confidence, clarity, and intellectual authority.
+
+Avoid excessively large startup-style headlines.
+
+Use intentional line lengths, spacing, font weights, and editorial hierarchy.
+
+# 4. DESIGN PHILOSOPHY
+
+The most important requirement:
+
+DO NOT CREATE GENERIC AI-GENERATED UI.
+
+Avoid:
+- Generic SaaS hero sections.
+- Excessive rounded cards.
+- Repeated three-column card grids.
+- Purple or random gradient backgrounds.
+- Random floating decorative shapes.
+- Excessive glassmorphism.
+- Unnecessary animations.
+- Oversized typography without purpose.
+- Generic stock illustrations.
+- Random icon usage.
+- Identical section layouts repeated throughout the page.
+- Excessive shadows and pill-shaped buttons.
+
+Instead, use:
+
+- Strong editorial composition.
+- Asymmetric layouts.
+- Well-structured content blocks.
+- Research publication-inspired design.
+- Meaningful photography.
+- Institutional visual hierarchy.
+- Large image-and-text compositions.
+- Carefully controlled whitespace.
+- Strong typographic contrast.
+- Clear content categorization.
+- Purposeful visual storytelling.
+- Consistent alignment and spacing.
+
+Every section must have a reason to exist.
+
+The website should feel like an established international research institute.
+
+# 5. INFORMATION ARCHITECTURE
+
+Build a complete multi-page website.
+
+## Main navigation
+
+1. Home
+2. About IPA
+3. Research & Publications
+4. Programs & Initiatives
+5. Campaigns
+6. News & Media
+7. Resources
+8. Contact
+
+Include a prominent but restrained CTA:
+
+"Explore Our Work"
+
+Secondary CTA:
+
+"Get Involved"
+
+Create dropdown navigation where necessary.
+
+The navigation must be clean, accessible, responsive, and easy to understand.
+
+---
+
+# 6. HOMEPAGE STRUCTURE
+
+Design the homepage as a carefully curated institutional experience.
+
+## Section 01 — Announcement Bar
+
+A slim announcement area at the top.
+
+Example:
+"Discover our latest research and public affairs initiatives."
+
+Make the announcement clickable and configurable.
+
+Do not make it visually distracting.
+
+## Section 02 — Header / Navigation
+
+Include:
+- IPA logo.
+- Primary navigation.
+- Research dropdown.
+- Programs dropdown.
+- Search icon.
+- Get Involved CTA.
+
+Use a refined sticky header.
+
+On scroll, the header may become slightly more compact.
+
+Mobile navigation must be thoughtfully designed.
+
+## Section 03 — Hero Section
+
+Create a strong, editorial-style institutional hero.
+
+Suggested headline:
+
+"Building an Informed Society Through Research, Dialogue & Action."
+
+Supporting text:
+
+"IPA — Institute of Public Affairs works at the intersection of public affairs, media research, and social engagement to encourage informed conversations and meaningful public participation."
+
+Primary CTA:
+"Explore Our Research"
+
+Secondary CTA:
+"Discover IPA"
+
+Visual direction:
+
+Use a high-quality documentary-style photograph depicting a real-world public discussion, research activity, community engagement, or media-related work.
+
+Use a large asymmetrical image composition.
+
+Avoid generic abstract illustrations.
+
+Consider a subtle blue overlay or an editorial image treatment.
+
+The hero should immediately explain:
+- Who IPA is.
+- What IPA does.
+- Why its work matters.
+
+## Section 04 — Organizational Introduction
+
+Section heading:
+
+"Understanding Public Affairs. Inspiring Meaningful Change."
+
+Introduce IPA with a short institutional description.
+
+Suggested content:
+
+"IPA is a public affairs and media research-oriented organization committed to strengthening public understanding through research, dialogue, knowledge sharing, and social engagement."
+
+Create a two-column composition:
+- Left: Editorial introduction.
+- Right: Relevant documentary photography or a visual composition.
+
+Include a "Learn More About IPA" link.
+
+## Section 05 — Focus Areas
+
+Heading:
+
+"Where Our Work Makes a Difference"
+
+Present four core focus areas:
+
+1. Media Research & Analysis
+   Exploring media practices, communication, information ecosystems, and their impact on society.
+
+2. Public Affairs & Policy Dialogue
+   Encouraging informed discussion on public issues, governance, and social development.
+
+3. Social Awareness & Advocacy
+   Supporting awareness initiatives and constructive public engagement.
+
+4. Research & Knowledge Development
+   Producing knowledge resources, research publications, and analytical perspectives.
+
+Use a visually varied editorial layout rather than four identical cards.
+
+Each focus area should link to a dedicated detail page or relevant filtered content.
+
+## Section 06 — Featured Research
+
+Heading:
+
+"Research That Informs Public Understanding"
+
+Display 3–4 featured research items.
+
+Use realistic demo publications:
+
+- Media Landscape and Public Trust in Bangladesh.
+- Digital Information Ecosystems and Social Awareness.
+- Public Perception of Media Accountability.
+- Youth Engagement in Public Affairs.
+
+Each item should include:
+- Research title.
+- Research category.
+- Publication date.
+- Short abstract.
+- Cover image or report cover.
+- Publication type.
+- Read More.
+- Download Report (demo interaction).
+
+Design this section like an editorial research library.
+
+Do not use generic blog cards.
+
+## Section 07 — Programs & Initiatives
+
+Heading:
+
+"Turning Research Into Meaningful Engagement"
+
+Show example initiatives:
+
+- Media Literacy and Public Awareness.
+- Community Dialogue Initiative.
+- Youth and Public Affairs Engagement.
+- Research and Policy Discussion Forum.
+
+Include:
+- Initiative title.
+- Brief description.
+- Relevant image.
+- Status: Ongoing / Completed / Upcoming.
+- Explore Initiative link.
+
+Use different layouts where appropriate.
+
+## Section 08 — Campaigns & Social Engagement
+
+Heading:
+
+"Encouraging Conversations. Supporting Change."
+
+Create a campaign showcase.
+
+Demo campaigns:
+
+- Think Before You Share.
+- Voices for Informed Communities.
+- Media Literacy for the Next Generation.
+
+Show campaign photography, descriptions, campaign objectives, and participation CTAs.
+
+Make the section visually engaging without looking like a commercial marketing campaign.
+
+## Section 09 — Latest News & Updates
+
+Heading:
+
+"What's Happening at IPA"
+
+Include:
+- News.
+- Events.
+- Press releases.
+- Organizational announcements.
+
+Demo content:
+
+- IPA Hosts a Public Dialogue on Media and Society.
+- Research Discussion on Digital Information and Public Awareness.
+- Community Engagement and Media Literacy Workshop.
+
+Each item should have a category, date, thumbnail, summary, and detail link.
+
+## Section 10 — Impact / Organizational Highlights
+
+Heading:
+
+"Knowledge, Engagement & Public Impact"
+
+Show carefully labeled demonstration indicators, such as:
+
+- Research Publications.
+- Public Dialogues.
+- Awareness Initiatives.
+- Knowledge Resources.
+
+Use clearly marked prototype data.
+
+Never represent invented figures as actual organizational achievements.
+
+Do not use inflated statistics simply to make the homepage impressive.
+
+## Section 11 — Resources & Knowledge Hub
+
+Create a section featuring:
+- Research reports.
+- Policy briefs.
+- Publications.
+- Media resources.
+- Discussion papers.
+
+Provide a clear "Explore All Resources" CTA.
+
+## Section 12 — Newsletter / Engagement
+
+Heading:
+
+"Stay Connected With IPA"
+
+Supporting text:
+
+"Receive updates on our research, publications, events, and initiatives."
+
+Include:
+- Email input.
+- Subscribe button.
+- Validation.
+- Success feedback.
+
+Frontend-only interaction.
+
+## Section 13 — Footer
+
+Create a comprehensive institutional footer.
+
+Include:
+
+Organization:
+- IPA logo.
+- Short description.
+- Organization identity.
+
+Quick Links:
+- About IPA.
+- Research.
+- Programs.
+- Campaigns.
+- News.
+- Contact.
+
+Resources:
+- Publications.
+- Reports.
+- Policy Briefs.
+- Media Resources.
+
+Contact:
+- Address placeholder.
+- Email placeholder.
+- Phone placeholder.
+
+Social media:
+- Facebook.
+- LinkedIn.
+- YouTube.
+- X.
+
+Bottom:
+- Copyright.
+- Privacy Policy.
+- Terms of Use.
+- Accessibility.
+
+Do not invent actual contact details.
+
+---
+
+# 7. INTERNAL PAGES
+
+The website must have functional and professionally designed internal pages.
+
+## A. About IPA
+
+Route: /about
+
+Sections:
+- About the Institute.
+- Vision.
+- Mission.
+- Core Values.
+- Areas of Work.
+- Organizational Approach.
+- Leadership and Team (demo profiles).
+- Institutional History (use clearly labeled placeholder content until verified).
+- Partners and Collaborators (do not invent real partnerships).
+
+Design this page like an institutional profile rather than a sales landing page.
+
+## B. Research & Publications
+
+Route: /research
+
+Create a research listing and searchable publication library.
+
+Features:
+- Search.
+- Category filters.
+- Year filters.
+- Publication type filters.
+- Featured research.
+- Pagination or Load More.
+- Publication cards with editorial styling.
+
+Categories:
+- Media Research.
+- Public Affairs.
+- Digital Media.
+- Social Development.
+- Governance.
+- Public Awareness.
+
+Publication types:
+- Research Report.
+- Policy Brief.
+- Discussion Paper.
+- Working Paper.
+- Article.
+
+Create individual publication detail pages:
+
+Route: /research/[slug]
+
+Include:
+- Title.
+- Abstract.
+- Author.
+- Publication date.
+- Category.
+- Cover image.
+- Full demo article content.
+- Key findings.
+- Related publications.
+- Download PDF button.
+
+PDF downloads can use locally generated demo assets or a clear demo download interaction.
+
+## C. Programs & Initiatives
+
+Route: /programs
+
+Show all programs with filters.
+
+Each program should have a detail page:
+
+Route: /programs/[slug]
+
+Include:
+- Overview.
+- Objectives.
+- Activities.
+- Target audience.
+- Expected outcomes.
+- Gallery.
+- Related updates.
+
+## D. Campaigns
+
+Route: /campaigns
+
+Create a campaign listing.
+
+Each campaign detail page:
+
+Route: /campaigns/[slug]
+
+Include:
+- Campaign introduction.
+- Objectives.
+- Why it matters.
+- Activities.
+- Visual gallery.
+- Related resources.
+- Get Involved CTA.
+
+## E. News & Media
+
+Route: /news
+
+Create a publication/newsroom-style listing.
+
+Filters:
+- News.
+- Events.
+- Press Releases.
+- Announcements.
+
+Detail page:
+
+Route: /news/[slug]
+
+Include:
+- Headline.
+- Publication date.
+- Category.
+- Featured image.
+- Full article.
+- Related stories.
+- Social sharing.
+
+## F. Resources
+
+Route: /resources
+
+Create a searchable knowledge repository.
+
+Resource categories:
+- Reports.
+- Publications.
+- Media Resources.
+- Policy Briefs.
+- Research Papers.
+
+Include useful filtering and sorting.
+
+## G. Contact
+
+Route: /contact
+
+Include:
+- Contact introduction.
+- Contact information placeholders.
+- Contact form.
+- Subject selection.
+- Email.
+- Name.
+- Message.
+- Form validation.
+- Success and error feedback.
+- Location map placeholder.
+
+Do not fabricate the organization's physical address.
+
+---
+
+# 8. GLOBAL UX REQUIREMENTS
+
+Prioritize usability over visual decoration.
+
+Implement:
+
+- Consistent navigation.
+- Clear page hierarchy.
+- Breadcrumb navigation.
+- Descriptive buttons and links.
+- Meaningful hover states.
+- Search functionality.
+- Functional filters.
+- Responsive dropdowns.
+- Loading states where appropriate.
+- Empty states.
+- Form validation.
+- Clear feedback after interactions.
+- Back-to-top button.
+- Custom 404 page.
+- Accessible mobile menu.
+
+All important buttons must perform an actual frontend action.
+
+Do not create decorative controls that appear functional but do nothing.
+
+---
+
+# 9. DESIGN SYSTEM AND COMPONENT ARCHITECTURE
+
+Build a reusable component architecture.
+
+Suggested components:
+
+Global:
+- SiteHeader
+- AnnouncementBar
+- DesktopNavigation
+- MobileNavigation
+- SiteFooter
+- Breadcrumbs
+- SectionHeading
+- PageHero
+- CTASection
+
+Research:
+- ResearchCard
+- ResearchFilters
+- ResearchGrid
+- PublicationMeta
+- PublicationDetail
+- RelatedResearch
+
+Programs:
+- ProgramCard
+- ProgramGrid
+- ProgramDetail
+
+News:
+- NewsCard
+- NewsGrid
+- NewsFilters
+- ArticleDetail
+
+Resources:
+- ResourceCard
+- ResourceFilters
+
+Forms:
+- NewsletterForm
+- ContactForm
+
+UI:
+- Button
+- Container
+- Badge
+- SearchInput
+- SelectFilter
+- Pagination
+- EmptyState
+- LoadingState
+
+Keep components modular, reusable, and maintainable.
+
+Create consistent design tokens for:
+- Colors.
+- Typography.
+- Spacing.
+- Container widths.
+- Border radii.
+- Shadows.
+- Transitions.
+- Breakpoints.
+
+Avoid excessive component abstraction.
+
+---
+
+# 10. TECHNOLOGY STACK
+
+Use:
+
+- Next.js (App Router).
+- TypeScript.
+- Tailwind CSS.
+- Lucide React.
+- Motion (formerly Framer Motion).
+- GSAP.
+- GSAP ScrollTrigger.
+- React Hook Form where useful.
+- Zod for form validation.
+- next/image.
+- next/font.
+- clsx or tailwind-merge.
+
+Use the latest stable compatible versions available in the project environment.
+
+Use strict TypeScript.
+
+Follow Next.js conventions.
+
+Prefer Server Components for static content and Client Components only where interaction or animation requires them.
+
+Do not turn the entire application into a Client Component.
+
+Do not add a backend.
+
+Do not add:
+- Database.
+- Prisma.
+- Authentication.
+- Admin dashboard.
+- API server.
+- Payment system.
+- CMS integration.
+
+This project is strictly a frontend prototype.
+
+---
+
+# 11. DEMO DATA ARCHITECTURE
+
+Create a centralized demo data system.
+
+Suggested structure:
+
+src/
+  app/
+  components/
+    layout/
+    navigation/
+    home/
+    research/
+    programs/
+    campaigns/
+    news/
+    resources/
+    forms/
+    ui/
+  data/
+    navigation.ts
+    organization.ts
+    research.ts
+    programs.ts
+    campaigns.ts
+    news.ts
+    resources.ts
+    team.ts
+  lib/
+    utils.ts
+    constants.ts
+  types/
+    index.ts
+  hooks/
+  styles/
+
+Use TypeScript interfaces for all data structures.
+
+Create realistic demo content, not repeated lorem ipsum.
+
+Recommended demo data:
+
+- 8 research publications.
+- 6 news articles.
+- 4 programs.
+- 3 campaigns.
+- 10 resources.
+- 4 demo team profiles.
+
+Each record should contain realistic metadata, descriptions, dates, categories, images, and slugs.
+
+Keep demo data separate from UI components.
+
+All pages should read from centralized data files.
+
+Use reusable detail page templates.
+
+Make future CMS integration possible without redesigning the application.
+
+Clearly document which content needs to be replaced with verified IPA information.
+
+---
+
+# 12. MOTION AND INTERACTION DESIGN
+
+Use animation to improve the experience, not to decorate everything.
+
+Motion:
+- Navigation transitions.
+- Dropdown interactions.
+- Subtle section reveals.
+- Button interactions.
+- Image hover treatments.
+- Mobile menu transitions.
+
+GSAP:
+- Carefully controlled hero introduction.
+- Editorial image reveal.
+- Selected scroll-based storytelling.
+- Subtle parallax on appropriate photography.
+
+Animation principles:
+- Smooth.
+- Intentional.
+- Subtle.
+- Professional.
+- Performance-conscious.
+
+Avoid:
+- Excessive scroll hijacking.
+- Constant floating animations.
+- Unnecessary bouncing.
+- Overanimated cards.
+- Delayed content visibility.
+- Animations that interfere with reading.
+
+Respect prefers-reduced-motion.
+
+Do not use GSAP and Motion to animate the same element simultaneously.
+
+---
+
+# 13. PHOTOGRAPHY AND VISUAL ASSETS
+
+Photography is an important part of IPA's institutional identity.
+
+Use carefully selected documentary-style imagery representing:
+
+- Public discussions.
+- Research and interviews.
+- Media professionals.
+- Community engagement.
+- Educational workshops.
+- Public forums.
+- Bangladesh's social context.
+- Research and knowledge sharing.
+
+Visual direction:
+- Authentic documentary photography.
+- Natural lighting.
+- Realistic human interactions.
+- Editorial compositions.
+- Professional institutional atmosphere.
+
+Avoid:
+- Generic AI-looking illustrations.
+- Unrelated corporate office photography.
+- Excessive stock images of people shaking hands.
+- Random decorative graphics.
+
+Use suitable image sources with valid URLs and appropriate licensing.
+
+Centralize image references in demo data.
+
+Provide meaningful alt text.
+
+If a relevant image is unavailable, use a visually appropriate placeholder rather than a broken image.
+
+---
+
+# 14. RESPONSIVE DESIGN
+
+Design mobile-first, but do not simply shrink desktop layouts.
+
+Support:
+- Small mobile: 320px and above.
+- Mobile: 375px–480px.
+- Tablet: 768px.
+- Laptop: 1024px–1440px.
+- Large desktop: 1600px and above.
+
+Ensure:
+- Proper typography scaling.
+- Comfortable reading widths.
+- Functional mobile navigation.
+- Appropriate image crops.
+- Touch-friendly controls.
+- Responsive publication filters.
+- No horizontal overflow.
+- Consistent section spacing.
+
+Mobile should feel like an intentionally designed experience.
+
+---
+
+# 15. ACCESSIBILITY AND SEO
+
+Accessibility:
+- Semantic HTML.
+- Correct heading hierarchy.
+- Keyboard navigation.
+- Visible focus indicators.
+- Accessible dropdowns.
+- Proper form labels.
+- Sufficient color contrast.
+- Screen-reader-friendly interactions.
+- Reduced-motion support.
+
+SEO:
+- Unique page titles.
+- Meta descriptions.
+- Open Graph metadata.
+- Canonical URLs.
+- Sitemap.
+- Robots configuration.
+- Organization structured data with verified information only.
+- Article structured data for publications and news where appropriate.
+
+Use descriptive URLs and meaningful content hierarchy.
+
+---
+
+# 16. PERFORMANCE AND CODE QUALITY
+
+Requirements:
+
+- Optimize images.
+- Use next/image.
+- Avoid unnecessary JavaScript.
+- Lazy-load below-the-fold imagery.
+- Minimize client-side rendering.
+- Avoid unnecessary dependencies.
+- Prevent hydration errors.
+- Prevent layout shifts.
+- Optimize animation performance.
+- Use semantic and maintainable code.
+- Avoid TypeScript any.
+- Avoid duplicated components.
+- Ensure all routes work directly.
+
+Run:
+- TypeScript checks.
+- ESLint.
+- Production build.
+- Responsive checks.
+- Navigation checks.
+- Interaction checks.
+
+Resolve all major warnings and errors before completion.
+
+---
+
+# 17. IMPORTANT DESIGN DETAILS
+
+The website must have a recognizable visual signature.
+
+Create a consistent editorial design language using:
+
+1. Strong institutional header and navigation.
+2. A distinctive editorial hero.
+3. Research publication layouts.
+4. Asymmetric photography compositions.
+5. Sophisticated typographic hierarchy.
+6. Subtle blue visual accents.
+7. Consistent spacing and alignment.
+8. Clear content categorization.
+9. Professional internal page templates.
+10. A strong, informative footer.
+
+Use section layouts that vary according to the content.
+
+For example:
+- Research should feel like a scholarly publication library.
+- News should feel like an editorial newsroom.
+- Campaigns should feel like public engagement initiatives.
+- About should feel like an institutional profile.
+- Programs should communicate activities and objectives.
+
+Do not force every content type into the same card design.
+
+# 18. FINAL EXPECTATIONS
+
+The final website must:
+
+- Look professionally art-directed.
+- Reflect IPA's identity.
+- Communicate trust and credibility.
+- Have complete and realistic demo content.
+- Include all requested pages.
+- Have functional frontend interactions.
+- Be responsive across devices.
+- Use sophisticated but restrained animation.
+- Follow modern Next.js architecture.
+- Be easy to maintain and expand.
+- Be ready for future backend and CMS integration.
+
+Most importantly:
+
+**Design this as if IPA commissioned an experienced international digital agency to create its official institutional website.**
+
+Do not prioritize visual trends over institutional credibility.
+
+Do not produce a template-looking website.
+
+Do not generate repetitive AI-style cards and sections.
+
+Think deeply about content hierarchy, user journeys, institutional trust, editorial composition, and information accessibility before writing the code.
+
+---
+
+# 19. DEVELOPMENT EXECUTION PLAN
+
+Follow this implementation sequence:
+
+Phase 1 — Discovery and Architecture
+- Understand the IPA brand.
+- Analyze the reference websites.
+- Establish sitemap.
+- Define content structure.
+- Create design tokens.
+
+Phase 2 — Design System
+- Establish typography.
+- Establish colors.
+- Define spacing and layout.
+- Build reusable components.
+- Define responsive behavior.
+
+Phase 3 — Homepage
+- Build navigation.
+- Build hero.
+- Build organizational introduction.
+- Build research showcase.
+- Build programs and campaigns.
+- Build newsroom.
+- Build footer.
+
+Phase 4 — Internal Pages
+- Build About.
+- Build Research listing and details.
+- Build Programs listing and details.
+- Build Campaigns listing and details.
+- Build News listing and details.
+- Build Resources.
+- Build Contact.
+
+Phase 5 — Interactions
+- Implement search.
+- Implement filters.
+- Implement navigation.
+- Implement forms.
+- Implement animations.
+- Implement responsive interactions.
+
+Phase 6 — Quality Assurance
+- Check all routes.
+- Check all buttons.
+- Check mobile and desktop.
+- Check accessibility.
+- Check performance.
+- Run production build.
+- Fix errors.
+
+Do not stop after building the homepage.
+
+Complete the entire frontend experience.
+
+**Final instruction: Build a coherent institutional digital platform for IPA — Institute of Public Affairs, not merely a visually attractive landing page.**
