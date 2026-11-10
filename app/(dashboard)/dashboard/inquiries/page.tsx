@@ -60,6 +60,7 @@ export default function DashboardInquiriesPage() {
     return matchesSearch && matchesStatus;
   });
 
+  
   return (
     <div className="space-y-6">
       <PageHeader
