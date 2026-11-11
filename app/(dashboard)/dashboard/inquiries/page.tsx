@@ -1,18 +1,25 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { PageHeader } from '@/components/dashboard/PageHeader';
-import { Search, Mail, Trash2, CheckCircle, Clock, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { PageHeader } from "@/components/dashboard/PageHeader";
+import {
+  Search,
+  Mail,
+  Trash2,
+  CheckCircle,
+  Clock,
+  RefreshCw,
+} from "lucide-react";
 
 export default function DashboardInquiriesPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const fetchItems = async () => {
     try {
-      const res = await fetch('/api/admin/inquiries');
+      const res = await fetch("/api/admin/inquiries");
       const data = await res.json();
       if (data.items) setItems(data.items);
     } catch (e) {
@@ -27,26 +34,26 @@ export default function DashboardInquiriesPage() {
   }, []);
 
   const toggleStatus = async (id: string, currentStatus: string) => {
-    const newStatus = currentStatus === 'unread' ? 'read' : 'unread';
+    const newStatus = currentStatus === "unread" ? "read" : "unread";
     try {
       await fetch(`/api/admin/inquiries/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
       fetchItems();
     } catch (err) {
-      alert('Failed to update status');
+      alert("Failed to update status");
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this message?')) return;
+    if (!confirm("Delete this message?")) return;
     try {
-      await fetch(`/api/admin/inquiries/${id}`, { method: 'DELETE' });
+      await fetch(`/api/admin/inquiries/${id}`, { method: "DELETE" });
       fetchItems();
     } catch (err) {
-      alert('Failed to delete inquiry');
+      alert("Failed to delete inquiry");
     }
   };
 
@@ -56,11 +63,11 @@ export default function DashboardInquiriesPage() {
       item.email.toLowerCase().includes(search.toLowerCase()) ||
       item.subject.toLowerCase().includes(search.toLowerCase()) ||
       item.message.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "all" || item.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
-  
   return (
     <div className="space-y-6">
       <PageHeader
@@ -82,14 +89,14 @@ export default function DashboardInquiriesPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          {['all', 'unread', 'read'].map((s) => (
+          {["all", "unread", "read"].map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize cursor-pointer transition-colors ${
                 statusFilter === s
-                  ? 'bg-[#0B2A4A] text-white'
-                  : 'bg-[#F8FAFC] text-[#64748B] hover:bg-[#EAF2FA]'
+                  ? "bg-[#0B2A4A] text-white"
+                  : "bg-[#F8FAFC] text-[#64748B] hover:bg-[#EAF2FA]"
               }`}
             >
               {s}
@@ -102,7 +109,9 @@ export default function DashboardInquiriesPage() {
         {loading ? (
           <div className="py-20 text-center bg-white rounded-2xl border border-[#E2E8F0]">
             <RefreshCw className="w-6 h-6 animate-spin text-[#0C57A5] mx-auto mb-2" />
-            <p className="text-xs text-[#64748B] font-mono">Loading inquiries...</p>
+            <p className="text-xs text-[#64748B] font-mono">
+              Loading inquiries...
+            </p>
           </div>
         ) : filteredItems.length === 0 ? (
           <div className="py-16 text-center text-xs text-[#64748B] bg-white rounded-2xl border border-[#E2E8F0]">
@@ -113,36 +122,42 @@ export default function DashboardInquiriesPage() {
             <div
               key={item.id}
               className={`p-5 rounded-2xl border transition-all bg-white ${
-                item.status === 'unread'
-                  ? 'border-[#0C57A5]/40 shadow-xs'
-                  : 'border-[#E2E8F0] opacity-90'
+                item.status === "unread"
+                  ? "border-[#0C57A5]/40 shadow-xs"
+                  : "border-[#E2E8F0] opacity-90"
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-3 border-b border-[#E2E8F0]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-[#0B2A4A] font-serif">{item.name}</span>
+                    <span className="font-bold text-sm text-[#0B2A4A] font-serif">
+                      {item.name}
+                    </span>
                     {item.organization && (
-                      <span className="text-xs text-[#64748B]">({item.organization})</span>
+                      <span className="text-xs text-[#64748B]">
+                        ({item.organization})
+                      </span>
                     )}
                     <span
                       className={`text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full ${
-                        item.status === 'unread'
-                          ? 'bg-[#E85338]/10 text-[#E85338]'
-                          : 'bg-emerald-50 text-emerald-700'
+                        item.status === "unread"
+                          ? "bg-[#E85338]/10 text-[#E85338]"
+                          : "bg-emerald-50 text-emerald-700"
                       }`}
                     >
                       {item.status}
                     </span>
                   </div>
-                  <p className="text-xs font-semibold text-[#0C57A5] mt-1">{item.subject}</p>
+                  <p className="text-xs font-semibold text-[#0C57A5] mt-1">
+                    {item.subject}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                   <button
                     onClick={() => toggleStatus(item.id, item.status)}
                     className="px-2.5 py-1 text-xs font-semibold rounded-lg border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#0B2A4A] transition-colors cursor-pointer"
                   >
-                    {item.status === 'unread' ? 'Mark as Read' : 'Mark Unread'}
+                    {item.status === "unread" ? "Mark as Read" : "Mark Unread"}
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
