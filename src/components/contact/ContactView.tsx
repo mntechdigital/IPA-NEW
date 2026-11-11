@@ -10,9 +10,9 @@ interface ContactViewProps {
 }
 
 export function ContactView({ initialIntent, settings }: ContactViewProps) {
-  const currentAddress = settings?.contactAddress || 'Segunbagicha, Topkhana Road, Dhaka-1000, Bangladesh';
-  const currentEmail = settings?.contactEmail || 'inquiry@ipa-institution.org';
-  const currentPhone = settings?.contactPhone || '+880 (2) 958-4100 / +880 (2) 958-4101';
+  const currentAddress = settings?.contactAddress || 'House 42, Road 11, Banani, Dhaka-1213, Bangladesh';
+  const currentEmail = settings?.contactEmail || 'info@ipa.org.bd';
+  const currentPhone = settings?.contactPhone || '+880 (2) 987-6543';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState(

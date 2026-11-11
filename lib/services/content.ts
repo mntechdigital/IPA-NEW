@@ -30,6 +30,13 @@ export async function getSiteSettings() {
         heroImage: media.heroImage || (settings as any).heroImage || '/images/hero_public_dialogue.jpg',
         heroVideoUrl: media.heroVideoUrl ?? (settings as any).heroVideoUrl ?? null,
         heroVideoActive: media.heroVideoActive !== undefined ? Boolean(media.heroVideoActive) : (settings as any).heroVideoActive ?? false,
+        contactEmail: settings.contactEmail || undefined,
+        contactPhone: settings.contactPhone || undefined,
+        contactAddress: settings.contactAddress || undefined,
+        facebookUrl: settings.facebookUrl || undefined,
+        twitterUrl: settings.twitterUrl || undefined,
+        linkedinUrl: settings.linkedinUrl || undefined,
+        youtubeUrl: settings.youtubeUrl || undefined,
         announcement: {
           id: 'ann-live',
           text: settings.announcementText || ORGANIZATION.announcement.text,

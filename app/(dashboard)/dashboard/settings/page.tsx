@@ -2,8 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/dashboard/PageHeader';
-import { ImageUploader } from '@/components/dashboard/ImageUploader';
-import { Save, Check, AlertCircle, RefreshCw, Globe, Mail, Phone, MapPin, Share2, UploadCloud, Copy } from 'lucide-react';
+import {
+  Save,
+  Check,
+  AlertCircle,
+  RefreshCw,
+  Globe,
+  Mail,
+  Phone,
+  MapPin,
+  Share2,
+} from 'lucide-react';
 
 export default function DashboardSettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -22,10 +31,6 @@ export default function DashboardSettingsPage() {
   const [twitterUrl, setTwitterUrl] = useState('');
   const [linkedinUrl, setLinkedinUrl] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
-
-  // Media Sandbox Uploader
-  const [uploadedUrl, setUploadedUrl] = useState('');
-  const [copied, setCopied] = useState(false);
 
   const fetchSettings = async () => {
     try {
@@ -88,13 +93,6 @@ export default function DashboardSettingsPage() {
     }
   };
 
-  const copyUploadedUrl = () => {
-    if (!uploadedUrl) return;
-    navigator.clipboard.writeText(uploadedUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   if (loading) {
     return (
       <div className="py-20 text-center">
@@ -105,11 +103,11 @@ export default function DashboardSettingsPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-8 max-w-4xl pb-16">
       <PageHeader
         badge="System Administration"
-        title="Settings & Media Storage"
-        description="Configure institutional identity, official correspondence channels, and test upload assets via media storage."
+        title="Settings & Global Configuration"
+        description="Configure institutional identity, official correspondence channels, and public social media links."
         action={
           <button
             onClick={handleSave}
@@ -124,186 +122,196 @@ export default function DashboardSettingsPage() {
 
       {success && (
         <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-          <Check className="w-4 h-4 text-emerald-600" />
-          <span>Site settings saved successfully!</span>
+          <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+          <span>Site settings saved successfully! Changes are live across the Site Footer, Contact page, and Home Hero.</span>
         </div>
       )}
 
       {error && (
         <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-semibold flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 text-red-600" />
+          <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* Media Uploader Tool */}
-      <div className="bg-white p-6 rounded-2xl border border-[#0C57A5]/30 shadow-xs space-y-4">
-        <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-          <div className="p-2 rounded-lg bg-[#EAF2FA] text-[#0C57A5]">
-            <UploadCloud className="w-4 h-4" />
+      {/* 1. Organization Identity */}
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-2xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E2E8F0] gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-[#EAF2FA] text-[#0C57A5] flex items-center justify-center font-bold">
+              <Globe className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold font-serif text-[#0B2A4A] text-base">1. Site & Organization Identity</h3>
+              <p className="text-[11px] text-[#64748B]">Primary institutional name, acronym, and homepage banner tagline.</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold font-serif text-[#0B2A4A] text-base">Media Asset Uploader</h3>
-            <p className="text-xs text-[#64748B]">Direct upload to institutional cloud storage (<code>ipa_portal</code>)</p>
-          </div>
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#EAF2FA] text-[#0C57A5] font-bold self-start sm:self-auto">
+            Live on Home Hero & Footers
+          </span>
         </div>
 
-        <ImageUploader
-          value={uploadedUrl}
-          onChange={setUploadedUrl}
-          label="Select File To Upload"
-        />
-
-        {uploadedUrl && (
-          <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] flex items-center justify-between gap-3">
-            <span className="text-xs font-mono text-[#0B2A4A] truncate">{uploadedUrl}</span>
-            <button
-              onClick={copyUploadedUrl}
-              className="px-3 py-1.5 rounded-lg bg-white border border-[#E2E8F0] text-xs font-semibold hover:bg-[#EAF2FA] text-[#0C57A5] flex items-center gap-1.5 flex-shrink-0 cursor-pointer"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied!' : 'Copy Media URL'}</span>
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Organization Identity */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-2xs space-y-4">
-        <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-          <Globe className="w-4 h-4 text-[#0C57A5]" />
-          <h3 className="font-bold font-serif text-[#0B2A4A] text-sm">Site Identity</h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#0B2A4A]">
               Full Organization Name
             </label>
             <input
               type="text"
               value={siteName}
               onChange={(e) => setSiteName(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#1E293B]"
+              placeholder="IPA — Institute of Public Affairs"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
-          <div>
-            <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#0B2A4A]">
               Short Name / Acronym
             </label>
             <input
               type="text"
               value={shortName}
               onChange={(e) => setShortName(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
+              placeholder="IPA"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm font-mono text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-            Institutional Tagline
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-[#0B2A4A]">
+            Institutional Tagline / Slogan
           </label>
           <input
             type="text"
             value={tagline}
             onChange={(e) => setTagline(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#1E293B]"
+            placeholder="Building an Informed Society Through Research, Dialogue & Action"
+            className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
           />
+          <p className="text-[10px] text-[#64748B]">
+            Displayed on the main homepage hero banner and public organization profile.
+          </p>
         </div>
       </div>
 
-      {/* Official Contact Info */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-2xs space-y-4">
-        <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-          <Mail className="w-4 h-4 text-[#0C57A5]" />
-          <h3 className="font-bold font-serif text-[#0B2A4A] text-sm">Official Contact Channels</h3>
+      {/* 2. Official Contact Info */}
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-2xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E2E8F0] gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-[#EAF2FA] text-[#0C57A5] flex items-center justify-center font-bold">
+              <Mail className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold font-serif text-[#0B2A4A] text-base">2. Official Contact Coordinates</h3>
+              <p className="text-[11px] text-[#64748B]">Central secretariat inbox, public phone, and physical address.</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#EAF2FA] text-[#0C57A5] font-bold self-start sm:self-auto">
+            Live on Site Footer & /contact
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-              Contact Email
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-[#0B2A4A] flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5 text-[#0C57A5]" />
+              <span>Contact Email</span>
             </label>
             <input
               type="email"
               value={contactEmail}
               onChange={(e) => setContactEmail(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
+              placeholder="info@ipa.org.bd"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
-          <div>
-            <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-              Phone Number
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-[#0B2A4A] flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5 text-[#0C57A5]" />
+              <span>Phone Number</span>
             </label>
             <input
               type="text"
               value={contactPhone}
               onChange={(e) => setContactPhone(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
+              placeholder="+880 (2) 987-6543"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-            Physical Headquarters Address
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold text-[#0B2A4A] flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-[#0C57A5]" />
+            <span>Central Secretariat Street Address</span>
           </label>
           <input
             type="text"
             value={contactAddress}
             onChange={(e) => setContactAddress(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
+            placeholder="House 42, Road 11, Banani, Dhaka-1213, Bangladesh"
+            className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs sm:text-sm text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
           />
         </div>
       </div>
 
-      {/* Social Media Links */}
-      <div className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-2xs space-y-4">
-        <div className="flex items-center gap-2 pb-3 border-b border-[#E2E8F0]">
-          <Share2 className="w-4 h-4 text-[#0C57A5]" />
-          <h3 className="font-bold font-serif text-[#0B2A4A] text-sm">Official Social Profiles</h3>
+      {/* 3. Social Media Links */}
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-2xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E2E8F0] gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-[#EAF2FA] text-[#0C57A5] flex items-center justify-center font-bold">
+              <Share2 className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold font-serif text-[#0B2A4A] text-base">3. Official Social Profiles</h3>
+              <p className="text-[11px] text-[#64748B]">External institutional channels displayed in the site footer.</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#EAF2FA] text-[#0C57A5] font-bold self-start sm:self-auto">
+            Live on Site Footer
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold text-[#1E293B] mb-1">Facebook</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#1E293B]">Facebook</label>
             <input
               type="text"
               value={facebookUrl}
               onChange={(e) => setFacebookUrl(e.target.value)}
-              placeholder="https://facebook.com/..."
-              className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
+              placeholder="https://facebook.com/ipa.bangladesh"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-[#1E293B] mb-1">Twitter / X</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#1E293B]">Twitter / X</label>
             <input
               type="text"
               value={twitterUrl}
               onChange={(e) => setTwitterUrl(e.target.value)}
-              placeholder="https://x.com/..."
-              className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
+              placeholder="https://x.com/ipa_bangladesh"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-[#1E293B] mb-1">LinkedIn</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#1E293B]">LinkedIn</label>
             <input
               type="text"
               value={linkedinUrl}
               onChange={(e) => setLinkedinUrl(e.target.value)}
-              placeholder="https://linkedin.com/company/..."
-              className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
+              placeholder="https://linkedin.com/company/ipa-bangladesh"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-[#1E293B] mb-1">YouTube</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#1E293B]">YouTube</label>
             <input
               type="text"
               value={youtubeUrl}
               onChange={(e) => setYoutubeUrl(e.target.value)}
-              placeholder="https://youtube.com/@..."
-              className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
+              placeholder="https://youtube.com/@ipa_bangladesh"
+              className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono text-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
             />
           </div>
         </div>

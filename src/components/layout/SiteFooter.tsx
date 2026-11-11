@@ -251,7 +251,7 @@ export function SiteFooter({ settings }: SiteFooterProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span>
-              © {new Date().getFullYear()} Institute of Public Affairs (IPA).
+              © {new Date().getFullYear()} {settings?.name || settings?.siteName || 'Institute of Public Affairs (IPA)'}. All Rights Reserved.
             </span>
           </div>
 

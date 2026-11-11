@@ -47,6 +47,8 @@ export async function PUT(request: NextRequest) {
     });
 
     revalidatePath('/', 'layout');
+    revalidatePath('/contact');
+    revalidatePath('/about');
 
     return NextResponse.json({ success: true, settings: updated });
   } catch (error: any) {
