@@ -3,18 +3,50 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Calendar, MapPin, Share2, ArrowRight } from 'lucide-react';
+import { ArrowLeft, MapPin, Share2 } from 'lucide-react';
 import { NewsItem } from '@/types';
 import { NEWS_ITEMS } from '@/data/news';
 
 interface NewsDetailViewProps {
   item: NewsItem;
+  relatedNews?: NewsItem[];
 }
 
-export function NewsDetailView({ item }: NewsDetailViewProps) {
+function renderFormattedContent(content?: string[] | string) {
+  if (!content) return null;
+  const rawText = Array.isArray(content) ? content.join('\n\n') : content;
+  if (!rawText.trim()) return null;
+
+  const isHtml = /<[a-z][\s\S]*>/i.test(rawText);
+  if (isHtml) {
+    return (
+      <div 
+        className="prose prose-sm sm:prose-base max-w-none text-[#1E293B] prose-headings:font-serif prose-headings:text-[#0B2A4A] prose-a:text-[#0C57A5] prose-strong:text-[#0B2A4A] prose-blockquote:border-l-[#0C57A5] prose-blockquote:text-[#475569] leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: rawText }}
+      />
+    );
+  }
+
+  const paragraphs = Array.isArray(content)
+    ? content
+    : rawText.split('\n\n').map((p) => p.trim()).filter(Boolean);
+
+  return (
+    <div className="space-y-6 text-sm sm:text-base text-[#1E293B] leading-relaxed">
+      {paragraphs.map((p, idx) => (
+        <p key={idx}>
+          {p}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+export function NewsDetailView({ item, relatedNews }: NewsDetailViewProps) {
   const [copied, setCopied] = useState(false);
 
-  const related = NEWS_ITEMS.filter(n => n.id !== item.id).slice(0, 3);
+  const newsPool = relatedNews && relatedNews.length > 0 ? relatedNews : NEWS_ITEMS;
+  const related = newsPool.filter(n => n.id !== item.id).slice(0, 3);
 
   const handleShare = () => {
     if (typeof window !== 'undefined') {
@@ -86,53 +118,53 @@ export function NewsDetailView({ item }: NewsDetailViewProps) {
               />
             </div>
             <div className="p-3 text-xs text-[#64748B] font-serif italic">
-              Fig 4.1 — Official dispatch photography from the Institute of Public Affairs.
+              {item.title} — Official Dispatch
             </div>
           </div>
         ) : null}
 
         {/* Lead Summary */}
-        <p className="editorial-dropcap text-lg sm:text-xl text-[#0B2A4A] leading-relaxed font-sans mb-8">
-          {item.summary}
-        </p>
+        {item.summary && (
+          <p className="editorial-dropcap text-lg sm:text-xl text-[#0B2A4A] leading-relaxed font-sans mb-8">
+            {item.summary}
+          </p>
+        )}
 
-        {/* Body Paragraphs */}
-        <div className="space-y-6 text-sm sm:text-base text-[#1E293B] leading-relaxed">
-          {item.content.map((p, idx) => (
-            <p key={idx}>
-              {p}
-            </p>
-          ))}
-        </div>
+        {/* Body Paragraphs / Formatted Content */}
+        {renderFormattedContent(item.content)}
 
         {/* Topic tags */}
-        <div className="mt-12 pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-2 text-xs text-[#64748B]">
-          <span className="font-bold text-[#0B2A4A]">Related Themes:</span>
-          {item.relatedTopics.map((topic, i) => (
-            <span key={topic} className="px-2.5 py-1 bg-[#F8FAFD] border border-[#E2E8F0] rounded-full text-[#0C57A5] font-medium">
-              {topic}
-            </span>
-          ))}
-        </div>
-
-        {/* Related Stories */}
-        <div className="mt-14 pt-10 border-t border-[#E2E8F0]">
-          <h3 className="text-xl font-bold font-serif text-[#0B2A4A] mb-6">
-            More Recent Dispatches
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {related.map((rel) => (
-              <div key={rel.id} className="p-5 bg-[#F8FAFD] rounded-2xl border border-[#E2E8F0] space-y-2 shadow-xs hover:border-[#0C57A5]/40 transition-all">
-                <div className="text-[11px] font-mono text-[#0C57A5] font-bold">{rel.category} · {rel.date}</div>
-                <h4 className="text-sm font-bold text-[#0B2A4A] hover:text-[#0C57A5] transition-colors leading-snug">
-                  <Link href={`/news/${rel.slug}`}>
-                    {rel.title}
-                  </Link>
-                </h4>
-              </div>
+        {item.relatedTopics && item.relatedTopics.length > 0 && (
+          <div className="mt-12 pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-2 text-xs text-[#64748B]">
+            <span className="font-bold text-[#0B2A4A]">Related Themes:</span>
+            {item.relatedTopics.map((topic) => (
+              <span key={topic} className="px-2.5 py-1 bg-[#F8FAFD] border border-[#E2E8F0] rounded-full text-[#0C57A5] font-medium">
+                {topic}
+              </span>
             ))}
           </div>
-        </div>
+        )}
+
+        {/* Related Stories */}
+        {related.length > 0 && (
+          <div className="mt-14 pt-10 border-t border-[#E2E8F0]">
+            <h3 className="text-xl font-bold font-serif text-[#0B2A4A] mb-6">
+              More Recent Dispatches
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {related.map((rel) => (
+                <div key={rel.id} className="p-5 bg-[#F8FAFD] rounded-2xl border border-[#E2E8F0] space-y-2 shadow-xs hover:border-[#0C57A5]/40 transition-all">
+                  <div className="text-[11px] font-mono text-[#0C57A5] font-bold">{rel.category} · {rel.date}</div>
+                  <h4 className="text-sm font-bold text-[#0B2A4A] hover:text-[#0C57A5] transition-colors leading-snug">
+                    <Link href={`/news/${rel.slug}`}>
+                      {rel.title}
+                    </Link>
+                  </h4>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </article>

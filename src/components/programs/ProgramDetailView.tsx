@@ -11,6 +11,29 @@ interface ProgramDetailViewProps {
   program: ProgramItem;
 }
 
+function renderFormattedContent(text?: string) {
+  if (!text) return null;
+  const isHtml = /<[a-z][\s\S]*>/i.test(text);
+  if (isHtml) {
+    return (
+      <div 
+        className="prose prose-sm sm:prose-base max-w-none text-[#1E293B] prose-headings:font-serif prose-headings:text-[#0B2A4A] prose-a:text-[#0C57A5] prose-strong:text-[#0B2A4A] prose-blockquote:border-l-[#0C57A5] prose-blockquote:text-[#475569] leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
+    );
+  }
+  const paragraphs = text.split('\n\n').map((p) => p.trim()).filter(Boolean);
+  return (
+    <div className="text-base text-[#1E293B] leading-relaxed space-y-4">
+      {paragraphs.map((para, idx) => (
+        <p key={idx} className={idx === 0 ? "editorial-dropcap leading-relaxed" : "leading-relaxed"}>
+          {para}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export function ProgramDetailView({ program }: ProgramDetailViewProps) {
   const [involvedModalOpen, setInvolvedModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -22,6 +45,12 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
       setTimeout(() => setCopied(false), 2000);
     }
   };
+
+  const overviewText = program.overview || program.description || '';
+
+  const hasObjectives = Array.isArray(program.objectives) && program.objectives.length > 0;
+  const hasActivities = Array.isArray(program.activities) && program.activities.length > 0;
+  const hasOutcomes = Array.isArray(program.expectedOutcomes) && program.expectedOutcomes.length > 0;
 
   return (
     <article className="bg-white">
@@ -38,24 +67,32 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
           </Link>
 
           <div className="flex flex-wrap items-center gap-2 text-xs text-blue-200 mb-3 font-mono">
-            <span className="font-bold text-[#F6B834] uppercase tracking-wider">{program.category}</span>
-            <span aria-hidden="true">·</span>
-            <span>Status: {program.status}</span>
+            {program.category && (
+              <>
+                <span className="font-bold text-[#F6B834] uppercase tracking-wider">{program.category}</span>
+                <span aria-hidden="true">·</span>
+              </>
+            )}
+            <span>Status: {program.status || 'Ongoing'}</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif tracking-tight mb-4 leading-tight text-balance text-white">
             {program.title}
           </h1>
 
-          <p className="text-sm sm:text-base text-blue-100 font-serif italic max-w-2xl leading-relaxed mb-6">
-            &ldquo;{program.subtitle}&rdquo;
-          </p>
+          {program.subtitle && (
+            <p className="text-sm sm:text-base text-blue-100 font-serif italic max-w-2xl leading-relaxed mb-6">
+              &ldquo;{program.subtitle}&rdquo;
+            </p>
+          )}
 
           <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-            <div className="text-xs text-blue-100">
-              <span className="text-blue-300 block font-mono">Lead Directorate</span>
-              <span className="font-bold text-white">{program.leadFellow}</span>
-            </div>
+            {program.leadFellow ? (
+              <div className="text-xs text-blue-100">
+                <span className="text-blue-300 block font-mono">Lead Directorate / Fellow</span>
+                <span className="font-bold text-white">{program.leadFellow}</span>
+              </div>
+            ) : <div />}
 
             <div className="flex items-center gap-2">
               <button
@@ -103,64 +140,70 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
                   />
                 </div>
                 <div className="p-3 text-xs text-[#64748B] font-serif italic">
-                  Fig 2.1 — Field engagement and participants during the {program.title}.
+                  {program.title} — Institutional Initiative
                 </div>
               </div>
             ) : null}
 
             {/* Overview Section */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                1. Program Overview & Rationale
-              </h2>
-              <p className="editorial-dropcap text-base text-[#1E293B] leading-relaxed">
-                {program.overview}
-              </p>
-            </div>
+            {overviewText && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
+                  Program Overview & Rationale
+                </h2>
+                {renderFormattedContent(overviewText)}
+              </div>
+            )}
 
             {/* Strategic Objectives */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                2. Strategic Objectives
-              </h2>
-              <div className="space-y-2.5">
-                {program.objectives.map((obj, i) => (
-                  <div key={i} className="p-4 bg-[#F8FAFD] rounded-2xl border border-[#E2E8F0] flex items-start gap-3 text-xs sm:text-sm text-[#1E293B] shadow-2xs">
-                    <CheckCircle className="w-4 h-4 text-[#0C57A5] shrink-0 mt-0.5" />
-                    <span>{obj}</span>
-                  </div>
-                ))}
+            {hasObjectives && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
+                  Strategic Objectives
+                </h2>
+                <div className="space-y-2.5">
+                  {program.objectives.map((obj, i) => (
+                    <div key={i} className="p-4 bg-[#F8FAFD] rounded-2xl border border-[#E2E8F0] flex items-start gap-3 text-xs sm:text-sm text-[#1E293B] shadow-2xs">
+                      <CheckCircle className="w-4 h-4 text-[#0C57A5] shrink-0 mt-0.5" />
+                      <span>{obj}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Core Activities */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                3. Core Program Activities
-              </h2>
-              <ul className="space-y-2 text-xs sm:text-sm text-[#1E293B] list-disc pl-5">
-                {program.activities.map((act, i) => (
-                  <li key={i} className="leading-relaxed">
-                    {act}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {hasActivities && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
+                  Core Program Activities
+                </h2>
+                <ul className="space-y-2 text-xs sm:text-sm text-[#1E293B] list-disc pl-5">
+                  {program.activities.map((act, i) => (
+                    <li key={i} className="leading-relaxed">
+                      {act}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Expected Outcomes */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                4. Expected Civic & Policy Outcomes
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {program.expectedOutcomes.map((out, i) => (
-                  <div key={i} className="p-5 bg-white rounded-2xl border border-[#E2E8F0] text-xs text-[#1E293B] shadow-xs">
-                    <strong className="text-[#0B2A4A] block font-bold mb-1">Impact Marker 0{i + 1}:</strong>
-                    <p className="leading-relaxed text-[#64748B]">{out}</p>
-                  </div>
-                ))}
+            {hasOutcomes && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold font-serif text-[#0B2A4A]">
+                  Expected Civic & Policy Outcomes
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {program.expectedOutcomes.map((out, i) => (
+                    <div key={i} className="p-5 bg-white rounded-2xl border border-[#E2E8F0] text-xs text-[#1E293B] shadow-xs">
+                      <strong className="text-[#0B2A4A] block font-bold mb-1">Impact Marker 0{i + 1}:</strong>
+                      <p className="leading-relaxed text-[#64748B]">{out}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
           </div>
 
@@ -172,16 +215,20 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
               </h3>
               <div>
                 <span className="text-[#64748B] block">Operational Status:</span>
-                <span className="font-bold text-[#0C57A5]">{program.status}</span>
+                <span className="font-bold text-[#0C57A5]">{program.status || 'Ongoing'}</span>
               </div>
-              <div>
-                <span className="text-[#64748B] block">Primary Target Group:</span>
-                <span className="text-[#1E293B]">{program.targetAudience}</span>
-              </div>
-              <div>
-                <span className="text-[#64748B] block">Supervising Fellow:</span>
-                <span className="text-[#1E293B]">{program.leadFellow}</span>
-              </div>
+              {program.targetAudience && (
+                <div>
+                  <span className="text-[#64748B] block">Primary Target Group:</span>
+                  <span className="text-[#1E293B]">{program.targetAudience}</span>
+                </div>
+              )}
+              {program.leadFellow && (
+                <div>
+                  <span className="text-[#64748B] block">Supervising Fellow / Directorate:</span>
+                  <span className="text-[#1E293B]">{program.leadFellow}</span>
+                </div>
+              )}
               <div className="pt-2">
                 <button
                   onClick={() => setInvolvedModalOpen(true)}

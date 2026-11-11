@@ -1,31 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { PageHeader } from '@/components/dashboard/PageHeader';
-import { ImageUploader } from '@/components/dashboard/ImageUploader';
-import { Plus, Search, Edit2, Trash2, X, RefreshCw, Megaphone } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, RefreshCw, Megaphone, ExternalLink } from 'lucide-react';
 
 export default function DashboardCampaignsPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-
-  // Form Fields
-  const [title, setTitle] = useState('');
-  const [slug, setSlug] = useState('');
-  const [tagline, setTagline] = useState('');
-  const [status, setStatus] = useState('Active Campaign');
-  const [coverImage, setCoverImage] = useState('');
-  const [introduction, setIntroduction] = useState('');
-  const [whyItMatters, setWhyItMatters] = useState('');
-  const [objectivesText, setObjectivesText] = useState('');
-  const [actionsText, setActionsText] = useState('');
-  const [partnersText, setPartnersText] = useState('');
 
   const fetchItems = async () => {
     try {
@@ -42,74 +26,6 @@ export default function DashboardCampaignsPage() {
   useEffect(() => {
     fetchItems();
   }, []);
-
-  const openCreateModal = () => {
-    setEditingId(null);
-    setTitle('');
-    setSlug('');
-    setTagline('');
-    setStatus('Active Campaign');
-    setCoverImage('');
-    setIntroduction('');
-    setWhyItMatters('');
-    setObjectivesText('');
-    setActionsText('');
-    setPartnersText('');
-    setModalOpen(true);
-  };
-
-  const openEditModal = (item: any) => {
-    setEditingId(item.id);
-    setTitle(item.title);
-    setSlug(item.slug);
-    setTagline(item.tagline);
-    setStatus(item.status);
-    setCoverImage(item.coverImage || '');
-    setIntroduction(item.introduction);
-    setWhyItMatters(item.whyItMatters);
-    setObjectivesText(Array.isArray(item.objectives) ? item.objectives.join('\n') : '');
-    setActionsText(Array.isArray(item.coreActions) ? item.coreActions.join('\n') : '');
-    setPartnersText(Array.isArray(item.partnerNetworks) ? item.partnerNetworks.join('\n') : '');
-    setModalOpen(true);
-  };
-
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-
-    const payload = {
-      title,
-      slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-      tagline,
-      status,
-      coverImage,
-      introduction,
-      whyItMatters: whyItMatters || introduction,
-      objectives: objectivesText.split('\n').map((s) => s.trim()).filter(Boolean),
-      coreActions: actionsText.split('\n').map((s) => s.trim()).filter(Boolean),
-      partnerNetworks: partnersText.split('\n').map((s) => s.trim()).filter(Boolean),
-    };
-
-    try {
-      const url = editingId ? `/api/admin/campaigns/${editingId}` : '/api/admin/campaigns';
-      const method = editingId ? 'PUT' : 'POST';
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error('Failed to save campaign');
-
-      setModalOpen(false);
-      fetchItems();
-    } catch (err: any) {
-      alert(err.message || 'Error saving campaign');
-    } finally {
-      setSaving(false);
-    }
-  };
 
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Delete campaign "${name}"?`)) return;
@@ -134,13 +50,13 @@ export default function DashboardCampaignsPage() {
         title="Public Campaigns"
         description="Oversee nationwide public interest initiatives, digital literacy movements, and community oversight toolkits."
         action={
-          <button
-            onClick={openCreateModal}
+          <Link
+            href="/dashboard/campaigns/new"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0C57A5] hover:bg-[#0B2A4A] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>New Campaign</span>
-          </button>
+          </Link>
         }
       />
 
@@ -190,7 +106,7 @@ export default function DashboardCampaignsPage() {
                         </div>
                         <div>
                           <p className="font-bold font-serif text-[#0B2A4A] text-xs">{item.title}</p>
-                          <p className="text-[11px] text-[#64748B] line-clamp-1">{item.introduction}</p>
+                          <p className="text-[11px] text-[#64748B] line-clamp-1">{item.tagline || item.introduction}</p>
                         </div>
                       </div>
                     </td>
@@ -202,15 +118,28 @@ export default function DashboardCampaignsPage() {
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => openEditModal(item)}
+                        {item.slug && (
+                          <Link
+                            href={`/campaigns/${item.slug}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-1.5 rounded-lg text-[#64748B] hover:text-[#0C57A5] hover:bg-[#F8FAFD]"
+                            title="Preview on live site"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </Link>
+                        )}
+                        <Link
+                          href={`/dashboard/campaigns/${item.id}/edit`}
                           className="p-1.5 rounded-lg text-[#0C57A5] hover:bg-[#EAF2FA]"
+                          title="Edit campaign"
                         >
                           <Edit2 className="w-4 h-4" />
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(item.id, item.title)}
-                          className="p-1.5 rounded-lg text-red-500 hover:bg-red-50"
+                          className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 cursor-pointer"
+                          title="Delete campaign"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -223,135 +152,6 @@ export default function DashboardCampaignsPage() {
           </div>
         )}
       </div>
-
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] my-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] mb-5">
-              <h3 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                {editingId ? 'Edit Campaign' : 'New Campaign'}
-              </h3>
-              <button onClick={() => setModalOpen(false)} className="p-2 text-[#64748B]">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-                  Campaign Title
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-serif font-bold text-[#0B2A4A]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Slug</label>
-                  <input
-                    type="text"
-                    value={slug}
-                    onChange={(e) => setSlug(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Status</label>
-                  <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                  >
-                    <option>Active Campaign</option>
-                    <option>Archived</option>
-                    <option>Upcoming</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Tagline</label>
-                <input
-                  type="text"
-                  value={tagline}
-                  onChange={(e) => setTagline(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                />
-              </div>
-
-              <ImageUploader value={coverImage} onChange={setCoverImage} label="Campaign Cover" />
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Introduction</label>
-                <textarea
-                  rows={3}
-                  required
-                  value={introduction}
-                  onChange={(e) => setIntroduction(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Why It Matters</label>
-                <textarea
-                  rows={3}
-                  value={whyItMatters}
-                  onChange={(e) => setWhyItMatters(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-                    Core Actions (one per line)
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={actionsText}
-                    onChange={(e) => setActionsText(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-                    Partner Networks (one per line)
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={partnersText}
-                    onChange={(e) => setPartnersText(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#E2E8F0]">
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#64748B]"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={saving}
-                  className="px-5 py-2.5 rounded-xl bg-[#0C57A5] hover:bg-[#0B2A4A] text-white text-xs font-bold"
-                >
-                  {saving ? 'Saving...' : editingId ? 'Update Campaign' : 'Create Campaign'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

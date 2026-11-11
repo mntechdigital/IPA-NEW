@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const item = await prisma.newsItem.findUnique({
+      where: { id },
+    });
+    if (!item) {
+      return NextResponse.json({ error: 'News item not found' }, { status: 404 });
+    }
+    return NextResponse.json({ item });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Failed to retrieve news item' }, { status: 500 });
+  }
+}
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

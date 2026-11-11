@@ -154,7 +154,7 @@ export function PublicationDetailView({ item, relatedItems }: PublicationDetailV
                   />
                 </div>
                 <div className="p-3 text-xs text-[#64748B] font-serif italic">
-                  Fig 1.1 — Empirical research fieldwork and stakeholder interview documentation.
+                  {item.title} — Empirical Research Publication
                 </div>
               </div>
             ) : null}

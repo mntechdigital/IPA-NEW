@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { PageHeader } from '@/components/dashboard/PageHeader';
 import { ImageUploader } from '@/components/dashboard/ImageUploader';
-import { Plus, Search, Edit2, Trash2, X, RefreshCw, UserCheck } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, X, RefreshCw, UserCheck, Users } from 'lucide-react';
 
 export default function DashboardTeamPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -14,13 +15,13 @@ export default function DashboardTeamPage() {
   const [saving, setSaving] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Form Fields
+  // Form Fields - Clean without predefined data
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
-  const [division, setDivision] = useState('Media Research Directorate');
+  const [division, setDivision] = useState('');
   const [bio, setBio] = useState('');
   const [focusAreasText, setFocusAreasText] = useState('');
-  const [pubCount, setPubCount] = useState(12);
+  const [pubCount, setPubCount] = useState<number | string>(0);
   const [avatar, setAvatar] = useState('');
 
   const fetchItems = async () => {
@@ -43,22 +44,22 @@ export default function DashboardTeamPage() {
     setEditingId(null);
     setName('');
     setRole('');
-    setDivision('Media Research Directorate');
+    setDivision('');
     setBio('');
-    setFocusAreasText('Media Ethics, Policy Analysis, Transparency');
-    setPubCount(5);
+    setFocusAreasText('');
+    setPubCount(0);
     setAvatar('');
     setModalOpen(true);
   };
 
   const openEditModal = (item: any) => {
     setEditingId(item.id);
-    setName(item.name);
-    setRole(item.role);
-    setDivision(item.division);
-    setBio(item.bio);
+    setName(item.name || '');
+    setRole(item.role || '');
+    setDivision(item.division || '');
+    setBio(item.bio || '');
     setFocusAreasText(Array.isArray(item.focusAreas) ? item.focusAreas.join(', ') : '');
-    setPubCount(item.publicationsCount);
+    setPubCount(item.publicationsCount ?? 0);
     setAvatar(item.avatar || '');
     setModalOpen(true);
   };
@@ -68,13 +69,13 @@ export default function DashboardTeamPage() {
     setSaving(true);
 
     const payload = {
-      name,
-      role,
-      division,
-      bio,
+      name: name.trim(),
+      role: role.trim(),
+      division: division.trim() || 'General Directorate',
+      bio: bio.trim(),
       focusAreas: focusAreasText.split(',').map((s) => s.trim()).filter(Boolean),
-      publicationsCount: Number(pubCount),
-      avatar,
+      publicationsCount: Number(pubCount) || 0,
+      avatar: avatar || null,
     };
 
     try {
@@ -169,8 +170,17 @@ export default function DashboardTeamPage() {
                   <tr key={item.id} className="hover:bg-[#F8FAFC]/80 transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[#0C57A5] text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
-                          {item.name.slice(0, 2).toUpperCase()}
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-[#0C57A5] text-white font-bold text-xs flex items-center justify-center flex-shrink-0 relative border border-[#E2E8F0]">
+                          {item.avatar ? (
+                            <Image
+                              src={item.avatar}
+                              alt={item.name}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <span>{item.name ? item.name.slice(0, 2).toUpperCase() : 'FL'}</span>
+                          )}
                         </div>
                         <div>
                           <p className="font-bold font-serif text-[#0B2A4A] text-xs">{item.name}</p>
@@ -183,19 +193,21 @@ export default function DashboardTeamPage() {
                       <p className="text-[11px] text-[#64748B]">{item.division}</p>
                     </td>
                     <td className="py-3.5 px-4 font-mono text-[11px] text-[#0C57A5] font-bold">
-                      {item.publicationsCount} Studies
+                      {item.publicationsCount || 0} Studies
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => openEditModal(item)}
-                          className="p-1.5 rounded-lg text-[#0C57A5] hover:bg-[#EAF2FA]"
+                          className="p-1.5 rounded-lg text-[#0C57A5] hover:bg-[#EAF2FA] cursor-pointer"
+                          title="Edit fellow"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(item.id, item.name)}
-                          className="p-1.5 rounded-lg text-red-500 hover:bg-red-50"
+                          className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 cursor-pointer"
+                          title="Delete fellow"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -211,12 +223,15 @@ export default function DashboardTeamPage() {
 
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] my-8">
+          <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[#E2E8F0] my-8 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] mb-5">
               <h3 className="text-xl font-bold font-serif text-[#0B2A4A]">
-                {editingId ? 'Edit Fellow Profile' : 'New Fellow Profile'}
+                {editingId ? 'Edit Fellow Profile' : 'Add Fellow Profile'}
               </h3>
-              <button onClick={() => setModalOpen(false)} className="p-2 text-[#64748B]">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="p-2 text-[#64748B] hover:text-[#0B2A4A] rounded-lg transition-colors cursor-pointer"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -224,7 +239,7 @@ export default function DashboardTeamPage() {
             <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-                  Full Name & Title
+                  Full Name & Title <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -232,56 +247,69 @@ export default function DashboardTeamPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Dr. Nazmul Huq"
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-serif font-bold text-[#0B2A4A]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Role / Designation</label>
-                  <input
-                    type="text"
-                    required
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    placeholder="Senior Fellow"
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Division / Unit</label>
-                  <input
-                    type="text"
-                    value={division}
-                    onChange={(e) => setDivision(e.target.value)}
-                    placeholder="Media Research Directorate"
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">Biographical Note</label>
-                <textarea
-                  rows={4}
-                  required
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs leading-relaxed"
+                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs font-serif font-bold text-[#0B2A4A] focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
-                    Focus Areas (comma separated)
+                    Role / Designation <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    placeholder="e.g. Senior Fellow"
+                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
+                    Division / Directorate
+                  </label>
+                  <input
+                    type="text"
+                    value={division}
+                    onChange={(e) => setDivision(e.target.value)}
+                    placeholder="e.g. Media Research Directorate"
+                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
+                  />
+                </div>
+              </div>
+
+              <ImageUploader
+                value={avatar}
+                onChange={setAvatar}
+                label="Fellow Portrait / Photograph"
+              />
+
+              <div>
+                <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
+                  Biographical Note <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Provide a biographical summary, research focus, and institutional affiliations..."
+                  className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold uppercase text-[#1E293B] mb-1">
+                    Focus Areas (comma-separated)
                   </label>
                   <input
                     type="text"
                     value={focusAreasText}
                     onChange={(e) => setFocusAreasText(e.target.value)}
-                    placeholder="Press Freedom, RTI, Disinformation"
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
+                    placeholder="e.g. Press Freedom, RTI, Disinformation"
+                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
                   />
                 </div>
                 <div>
@@ -290,9 +318,11 @@ export default function DashboardTeamPage() {
                   </label>
                   <input
                     type="number"
+                    min="0"
                     value={pubCount}
-                    onChange={(e) => setPubCount(Number(e.target.value))}
-                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs"
+                    onChange={(e) => setPubCount(e.target.value === '' ? '' : Number(e.target.value))}
+                    placeholder="0"
+                    className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0C57A5]"
                   />
                 </div>
               </div>
@@ -301,14 +331,14 @@ export default function DashboardTeamPage() {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#64748B]"
+                  className="px-4 py-2 text-xs font-semibold text-[#64748B] hover:text-[#1E293B] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2.5 rounded-xl bg-[#0C57A5] hover:bg-[#0B2A4A] text-white text-xs font-bold"
+                  className="px-5 py-2.5 rounded-xl bg-[#0C57A5] hover:bg-[#0B2A4A] text-white text-xs font-bold transition-colors cursor-pointer"
                 >
                   {saving ? 'Saving...' : editingId ? 'Update Fellow' : 'Add Fellow'}
                 </button>

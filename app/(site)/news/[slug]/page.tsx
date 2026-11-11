@@ -36,7 +36,10 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { slug } = await params;
-  const item = await getNewsItemBySlug(slug);
+  const [item, allNews] = await Promise.all([
+    getNewsItemBySlug(slug),
+    getNewsItems(),
+  ]);
 
   if (!item) {
     notFound();
@@ -50,7 +53,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           { label: item.title }
         ]} 
       />
-      <NewsDetailView item={item} />
+      <NewsDetailView item={item} relatedNews={allNews} />
     </>
   );
 }

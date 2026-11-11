@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const item = await prisma.programItem.findUnique({
+      where: { id },
+    });
+    if (!item) {
+      return NextResponse.json({ error: 'Program not found' }, { status: 404 });
+    }
+    return NextResponse.json({ item });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Failed to retrieve program' }, { status: 500 });
+  }
+}
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -26,7 +44,8 @@ export async function PUT(
         targetAudience: body.targetAudience,
         expectedOutcomes: body.expectedOutcomes,
         leadFellow: body.leadFellow,
-        published: body.published ?? true,
+        order: body.order !== undefined ? Number(body.order) || 0 : undefined,
+        published: body.published !== undefined ? Boolean(body.published) : undefined,
       },
     });
 

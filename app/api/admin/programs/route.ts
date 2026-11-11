@@ -30,6 +30,8 @@ export async function POST(request: NextRequest) {
       targetAudience,
       expectedOutcomes,
       leadFellow,
+      order,
+      published,
     } = body;
 
     if (!title || !slug || !description) {
@@ -48,14 +50,19 @@ export async function POST(request: NextRequest) {
         overview: overview || description,
         objectives: objectives || [],
         activities: activities || [],
-        targetAudience: targetAudience || 'General Public',
+        targetAudience: targetAudience || '',
         expectedOutcomes: expectedOutcomes || [],
-        leadFellow: leadFellow || 'IPA Program Fellow',
+        leadFellow: leadFellow || '',
+        order: typeof order === 'number' ? order : Number(order) || 0,
+        published: published !== undefined ? Boolean(published) : true,
       },
     });
 
     revalidatePath('/programs');
     revalidatePath('/');
+    if (created.slug) {
+      revalidatePath(`/programs/${created.slug}`);
+    }
 
     return NextResponse.json({ success: true, item: created });
   } catch (error: any) {
