@@ -176,31 +176,31 @@ export function CampaignResourcesUploader({
 
       {/* Error alert */}
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-700 text-xs">
-          <AlertCircle className="w-4 h-4 shrink-0" />
-          <span>{error}</span>
+        <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2 text-red-700 text-xs min-w-0 break-words break-all">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+          <span className="min-w-0 flex-1">{error}</span>
         </div>
       )}
 
       {/* Success alert */}
       {successMsg && (
-        <div className="p-3 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2 text-green-700 text-xs">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>{successMsg}</span>
+        <div className="p-3 bg-green-50 border border-green-200 rounded-xl flex items-start gap-2 text-green-700 text-xs min-w-0 break-words break-all">
+          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+          <span className="min-w-0 flex-1">{successMsg}</span>
         </div>
       )}
 
       {/* List of Attached PDF Resources */}
       {resources.length > 0 && (
-        <div className="space-y-2.5 pt-2">
+        <div className="space-y-2.5 pt-2 min-w-0 w-full">
           <div className="text-[11px] font-mono font-bold text-[#64748B] uppercase tracking-wider">
             Attached Resources ({resources.length})
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 min-w-0">
             {resources.map((item, idx) => (
               <div
                 key={idx}
-                className="p-3.5 bg-white rounded-xl border border-[#E2E8F0] shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                className="p-3.5 bg-white rounded-xl border border-[#E2E8F0] shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <div className="w-9 h-9 rounded-lg bg-red-50 text-red-600 border border-red-200 shrink-0 flex items-center justify-center font-bold text-xs">
@@ -214,10 +214,10 @@ export function CampaignResourcesUploader({
                       placeholder="Resource Title..."
                       className="w-full text-xs font-bold text-[#0B2A4A] bg-transparent border-b border-transparent hover:border-[#CBD5E1] focus:border-[#0C57A5] focus:outline-none transition-colors py-0.5 truncate"
                     />
-                    <div className="flex items-center gap-2 text-[10px] text-[#64748B] font-mono mt-0.5">
-                      <span>{item.type || 'PDF Toolkit'}</span>
+                    <div className="flex items-center gap-2 text-[10px] text-[#64748B] font-mono mt-0.5 flex-wrap min-w-0">
+                      <span className="truncate">{item.type || 'PDF Toolkit'}</span>
                       <span>·</span>
-                      <span className="font-semibold text-[#0B2A4A]">{item.size}</span>
+                      <span className="font-semibold text-[#0B2A4A] shrink-0">{item.size}</span>
                     </div>
                   </div>
                 </div>

@@ -43,10 +43,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title, slug, and abstract are required' }, { status: 400 });
     }
 
+    const cleanSlug = (slug || title)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     const created = await prisma.researchItem.create({
       data: {
-        title,
-        slug,
+        title: title.trim(),
+        slug: cleanSlug,
         category: category || 'Media Research',
         type: type || 'Research Report',
         date: date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),

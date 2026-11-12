@@ -207,7 +207,7 @@ export default function DashboardResearchPage() {
                           title="Click to view attached PDF document"
                         >
                           <FileText className="w-3.5 h-3.5 text-red-600 shrink-0" />
-                          <span>PDF ({item.fileSize || 'Attached'})</span>
+                          <span className="truncate max-w-[120px]">PDF ({item.fileSize || 'Attached'})</span>
                         </a>
                       ) : (
                         <span className="text-[10px] font-mono text-[#94A3B8]">No PDF</span>

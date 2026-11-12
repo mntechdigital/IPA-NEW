@@ -31,11 +31,19 @@ export async function PUT(
     });
     if (!existing) return NextResponse.json({ error: 'Publication not found' }, { status: 404 });
 
+    const cleanSlug = body.slug !== undefined
+      ? (body.slug || body.title || '')
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+      : undefined;
+
     const updated = await prisma.researchItem.update({
       where: { id: existing.id },
       data: {
-        title: body.title,
-        slug: body.slug,
+        title: body.title !== undefined ? body.title.trim() : undefined,
+        slug: cleanSlug,
         category: body.category,
         type: body.type,
         date: body.date,

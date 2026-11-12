@@ -246,10 +246,40 @@ export async function getResearchItems(): Promise<ResearchItem[]> {
   }
 }
 
-export async function getResearchItemBySlug(slug: string): Promise<ResearchItem | null> {
+function getSlugVariations(rawSlug: string): string[] {
+  if (!rawSlug) return [];
   try {
-    const r = await prisma.researchItem.findUnique({
-      where: { slug },
+    const decoded = decodeURIComponent(rawSlug);
+    const normalized = decoded
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    const spaceReplaced = rawSlug.replace(/%20/g, ' ');
+    const hyphenReplaced = rawSlug.replace(/-/g, ' ');
+
+    const set = new Set([
+      rawSlug,
+      decoded,
+      normalized,
+      spaceReplaced,
+      hyphenReplaced,
+      rawSlug.toLowerCase(),
+      decoded.toLowerCase(),
+    ]);
+    return Array.from(set).filter(Boolean);
+  } catch {
+    return [rawSlug, rawSlug.toLowerCase()];
+  }
+}
+
+export async function getResearchItemBySlug(slug: string): Promise<ResearchItem | null> {
+  const variations = getSlugVariations(slug);
+  try {
+    const r = await prisma.researchItem.findFirst({
+      where: {
+        OR: variations.map((s) => ({ slug: s })),
+      },
     });
     if (r) {
       return {
@@ -277,10 +307,18 @@ export async function getResearchItemBySlug(slug: string): Promise<ResearchItem 
         },
       };
     }
-    return null;
+    return (
+      RESEARCH_ITEMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   } catch (error) {
     console.error('Error fetching research item by slug from DB:', error);
-    return RESEARCH_ITEMS.find((item) => item.slug === slug) || null;
+    return (
+      RESEARCH_ITEMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   }
 }
 
@@ -342,9 +380,12 @@ export async function getLatestPrograms(limit: number = 3): Promise<ProgramItem[
 }
 
 export async function getProgramBySlug(slug: string): Promise<ProgramItem | null> {
+  const variations = getSlugVariations(slug);
   try {
-    const p = await prisma.programItem.findUnique({
-      where: { slug },
+    const p = await prisma.programItem.findFirst({
+      where: {
+        OR: variations.map((s) => ({ slug: s })),
+      },
     });
     if (p) {
       return {
@@ -364,10 +405,18 @@ export async function getProgramBySlug(slug: string): Promise<ProgramItem | null
         leadFellow: p.leadFellow,
       };
     }
-    return null;
+    return (
+      PROGRAMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   } catch (error) {
     console.error('Error fetching program by slug from DB:', error);
-    return PROGRAMS.find((item) => item.slug === slug) || null;
+    return (
+      PROGRAMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   }
 }
 
@@ -398,9 +447,12 @@ export async function getCampaigns(): Promise<CampaignItem[]> {
 }
 
 export async function getCampaignBySlug(slug: string): Promise<CampaignItem | null> {
+  const variations = getSlugVariations(slug);
   try {
-    const c = await prisma.campaignItem.findUnique({
-      where: { slug },
+    const c = await prisma.campaignItem.findFirst({
+      where: {
+        OR: variations.map((s) => ({ slug: s })),
+      },
     });
     if (c) {
       return {
@@ -418,10 +470,18 @@ export async function getCampaignBySlug(slug: string): Promise<CampaignItem | nu
         resources: (c.resources as any) || [],
       };
     }
-    return null;
+    return (
+      CAMPAIGNS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   } catch (error) {
     console.error('Error fetching campaign by slug from DB:', error);
-    return CAMPAIGNS.find((item) => item.slug === slug) || null;
+    return (
+      CAMPAIGNS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   }
 }
 
@@ -451,9 +511,12 @@ export async function getNewsItems(): Promise<NewsItem[]> {
 }
 
 export async function getNewsItemBySlug(slug: string): Promise<NewsItem | null> {
+  const variations = getSlugVariations(slug);
   try {
-    const n = await prisma.newsItem.findUnique({
-      where: { slug },
+    const n = await prisma.newsItem.findFirst({
+      where: {
+        OR: variations.map((s) => ({ slug: s })),
+      },
     });
     if (n) {
       return {
@@ -470,10 +533,18 @@ export async function getNewsItemBySlug(slug: string): Promise<NewsItem | null> 
         relatedTopics: (n.relatedTopics as any) || [],
       };
     }
-    return null;
+    return (
+      NEWS_ITEMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   } catch (error) {
     console.error('Error fetching news item by slug from DB:', error);
-    return NEWS_ITEMS.find((item) => item.slug === slug) || null;
+    return (
+      NEWS_ITEMS.find((item) =>
+        variations.some((v) => item.slug.toLowerCase() === v.toLowerCase())
+      ) || null
+    );
   }
 }
 

@@ -28,11 +28,19 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
 
+    const cleanSlug = body.slug !== undefined
+      ? (body.slug || body.title || '')
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+      : undefined;
+
     const updated = await prisma.programItem.update({
       where: { id },
       data: {
-        title: body.title,
-        slug: body.slug,
+        title: body.title !== undefined ? body.title.trim() : undefined,
+        slug: cleanSlug,
         subtitle: body.subtitle,
         status: body.status,
         category: body.category,

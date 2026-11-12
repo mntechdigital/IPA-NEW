@@ -132,12 +132,11 @@ export function ProgramForm({ initialId }: ProgramFormProps) {
 
     setSaving(true);
 
-    const finalSlug =
-      slug.trim() ||
-      title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
+    const finalSlug = (slug || title)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
     // Generate concise plain-text description for cards from subtitle or rich content
     const cardDescription = subtitle.trim() || stripHtml(richContent).slice(0, 240) || title.trim();
@@ -345,7 +344,12 @@ export function ProgramForm({ initialId }: ProgramFormProps) {
                   value={slug}
                   onChange={(e) => {
                     setIsCustomSlug(true);
-                    setSlug(e.target.value);
+                    setSlug(
+                      e.target.value
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .replace(/[^a-z0-9-]/g, '')
+                    );
                   }}
                   placeholder="e.g. media-literacy-public-awareness"
                   className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl text-xs font-mono text-[#0B2A4A] focus:outline-none focus:ring-2 focus:ring-[#0C57A5] focus:bg-white"

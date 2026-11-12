@@ -211,12 +211,11 @@ export function ResearchForm({ initialId }: ResearchFormProps) {
 
     setSaving(true);
 
-    const finalSlug =
-      slug.trim() ||
-      title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
+    const finalSlug = (slug || title)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
     const finalDate =
       date.trim() ||
@@ -400,9 +399,9 @@ export function ResearchForm({ initialId }: ResearchFormProps) {
       )}
 
       {/* Main 2-Column Responsive Workspace */}
-      <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start min-w-0 w-full">
         {/* ================= LEFT COLUMN: PRIMARY EDITORIAL CANVAS (8 cols) ================= */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-8 min-w-0 w-full">
           {/* Card 1: Primary Overview */}
           <section className="bg-white p-6 sm:p-7 rounded-3xl border border-[#E2E8F0] shadow-2xs space-y-5">
             <div className="flex items-center gap-2 pb-3 border-b border-[#F1F5F9]">
@@ -753,7 +752,7 @@ export function ResearchForm({ initialId }: ResearchFormProps) {
         </div>
 
         {/* ================= RIGHT COLUMN: MEDIA, FILES & PUBLISHING CONTROLS (4 cols) ================= */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-6 min-w-0 w-full">
           {/* Card 1: Publish Box */}
           <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] shadow-2xs space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#F1F5F9]">

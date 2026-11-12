@@ -780,7 +780,8 @@ export function HomeResourcesManager() {
                               href={downloadUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[11px] font-mono text-[#0C57A5] hover:underline truncate inline-flex items-center gap-1 mt-1 max-w-[200px]"
+                              className="text-[11px] font-mono text-[#0C57A5] hover:underline inline-flex items-center gap-1 mt-1 max-w-full min-w-0 truncate"
+                              title={downloadUrl}
                             >
                               <span className="truncate">{downloadUrl}</span>
                               <ExternalLink className="w-3 h-3 shrink-0" />
@@ -788,8 +789,8 @@ export function HomeResourcesManager() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 pt-1 border-t border-emerald-200/60">
-                          <label className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#CBD5E1] hover:border-[#0C57A5] text-[#0B2A4A] text-xs font-semibold transition-colors cursor-pointer shadow-2xs">
+                        <div className="flex items-center gap-2 pt-1 border-t border-emerald-200/60 flex-wrap">
+                          <label className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#CBD5E1] hover:border-[#0C57A5] text-[#0B2A4A] text-xs font-semibold transition-colors cursor-pointer shadow-2xs">
                             {uploading ? (
                               <Loader2 className="w-3.5 h-3.5 animate-spin" />
                             ) : uploadSuccess ? (
@@ -810,7 +811,7 @@ export function HomeResourcesManager() {
                           <button
                             type="button"
                             onClick={() => setDownloadUrl('')}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 text-xs font-semibold transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 text-xs font-semibold transition-colors cursor-pointer shrink-0"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                             <span>Remove</span>
@@ -818,7 +819,7 @@ export function HomeResourcesManager() {
                         </div>
                       </div>
                     ) : (
-                      <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-[#CBD5E1] hover:border-[#0C57A5] rounded-2xl bg-[#F8FAFC] hover:bg-white text-center cursor-pointer transition-all group">
+                      <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-[#CBD5E1] hover:border-[#0C57A5] rounded-2xl bg-[#F8FAFC] hover:bg-white text-center cursor-pointer transition-all group min-w-0">
                         <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#0C57A5] group-hover:scale-105 transition-transform flex items-center justify-center mb-2.5 border border-blue-100">
                           {uploading ? (
                             <Loader2 className="w-5 h-5 animate-spin text-[#0C57A5]" />
@@ -826,7 +827,7 @@ export function HomeResourcesManager() {
                             <Upload className="w-5 h-5" />
                           )}
                         </div>
-                        <p className="text-xs font-bold text-[#0B2A4A] group-hover:text-[#0C57A5] transition-colors">
+                        <p className="text-xs font-bold text-[#0B2A4A] group-hover:text-[#0C57A5] transition-colors break-words">
                           {uploading ? 'Uploading Document to Server...' : 'Click to Upload Document'}
                         </p>
                         <p className="text-[11px] text-[#64748B] mt-1">
@@ -843,9 +844,9 @@ export function HomeResourcesManager() {
                     )}
 
                     {uploadError && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-rose-700 bg-rose-50 border border-rose-200 p-2.5 rounded-xl">
-                        <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
-                        <span>{uploadError}</span>
+                      <div className="flex items-start gap-1.5 text-[11px] text-rose-700 bg-rose-50 border border-rose-200 p-2.5 rounded-xl min-w-0 break-words break-all">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
+                        <span className="min-w-0 flex-1">{uploadError}</span>
                       </div>
                     )}
                   </div>

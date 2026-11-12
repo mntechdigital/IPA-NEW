@@ -38,10 +38,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title, slug, and description are required' }, { status: 400 });
     }
 
+    const cleanSlug = (slug || title)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     const created = await prisma.programItem.create({
       data: {
-        title,
-        slug,
+        title: title.trim(),
+        slug: cleanSlug,
         subtitle: subtitle || '',
         status: status || 'Ongoing',
         category: category || 'Civic Engagement',
